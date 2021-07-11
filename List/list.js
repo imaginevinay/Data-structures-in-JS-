@@ -23,7 +23,8 @@ function List() {
 
 // append item to list
 function append(element) {
-  this.dataStore[this.listSize++] = element;
+  this.dataStore[this.listSize] = element;
+  this.listSize++;
 }
 
 // find element in list
@@ -116,6 +117,7 @@ names.append("Cynthia");
 names.append("Jennifer");
 names.append("Bryan");
 names.append("Danny");
+
 // iterator using list DS
 for(names.front(); names.currPos() < names.length(); names.next()) {
   console.log(names.currPos())
