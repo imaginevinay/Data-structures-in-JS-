@@ -12,32 +12,30 @@ class BST {
     }
 
     add(data) {
+        const node = new Node(data);
         if(this.root === null) {
-            this.root = new Node(data);
+            this.root = node;
             return;
-        } else {
-           const searchTree = (node) => {
-            if(data < node.data) {
-                if(node.left === null) {
-                    node.left = new Node(data);
+        }
+        let current = this.root;
+        while(true) {
+            if(data < current.data) {
+                if(current.left !== null) {
+                    current.left = node;
                     return;
-                } else if (node.left !== null) {
-                    return searchTree(node.left)
                 }
-            } else if (data > node.data) {
-                if(node.right === null) {
-                    node.right = new Node(data);
-                    return;
-                } else if (node.data !== null) {
-                    return searchTree(node.right)
-                }
-            } else {
-                // condition where data === node we dont add node
-                return null;
-            }
-           }
+                current = current.left;
 
-           return searchTree(this.root);
+            } else if (data > current.data) {
+                if(current.right !== null) {
+                    current.right = node;
+                    return;
+                }
+                current = current.right
+
+            } else {
+                return;
+            }
         }
     }
 
@@ -108,10 +106,7 @@ class BST {
                 }
 
                 // if node has both children
-                let tempNode = node.right;
-                while(tempNode.left !== null) {
-                    tempNode = tempNode.left;
-                }
+                let tempNode = this.findMin(node.right);
                 node.data = tempNode.data;
                 node.right = removeNode(node.right, tempNode.data);
                 return node
@@ -201,4 +196,35 @@ class BST {
             return res;
         }
     }
+    levelOrder() {
+        let result = [];
+        let queue = [];
+        if(this.root === null) {
+            return null
+        } else {
+            queue.push(this.root)
+            while(queue.length > 0) {
+                let node = queue.shift();
+                result.push(node.data);
+                if(node.left !== null) {
+                    queue.push(node.left);
+                }
+                if(node.right !== null) {
+                    queue.push(node.right);
+                }
+            }
+            return result; 
+        }
+
+    }
 }
+result = []
+queue = [9]
+
+r= [9]
+q=[4, 17]
+
+r=[9,4]
+q=[17]
+
+q=[17,3,6]
